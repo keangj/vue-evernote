@@ -1,11 +1,15 @@
 <template>
-  <div id="note-detail">
-    <h1>{{msg}} : {{ $route.params.noteId }}</h1>
+  <div id="detail">
+    <NoteSidebar/>
+    <div id="note-detail">
+      <h1>note : {{ $route.query.noteId }}book{{ $route.query.notebookId }}</h1>
+    </div>
   </div>
 </template>
 
 <script>
 import Auth from '@/apis/auth'
+import NoteSidebar from '@/components/NoteSidebar'
 
   export default {
     name: 'NoteDetail',
@@ -13,6 +17,9 @@ import Auth from '@/apis/auth'
       return {
         msg: '笔记详情页'
       }
+    },
+    components: {
+      NoteSidebar
     },
     created() {
       Auth.getInfo().then(data => {
@@ -25,6 +32,12 @@ import Auth from '@/apis/auth'
 </script>
 
 <style scoped>
+#detail {
+  display: flex;
+}
+#note-detail {
+  flex: 1;
+}
 h1 {
   color: blue;
 }

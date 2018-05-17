@@ -2,11 +2,14 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 // import ElementUI from 'element-ui'
-import { Message, MessageBox } from 'element-ui'
+import { Message, MessageBox, Dropdown, DropdownMenu, DropdownItem } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import App from './App'
 import router from './router'
 
+Vue.component(Dropdown.name, Dropdown);
+Vue.component(DropdownMenu.name, DropdownMenu);
+Vue.component(DropdownItem.name, DropdownItem);
 // Vue.use(ElementUI);
 Vue.component(Message.name, Message);
 Vue.component(MessageBox.name, MessageBox);
