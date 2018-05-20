@@ -98,11 +98,6 @@ import {clearlyDate} from '@/helpers/util'
           });
         });
       }
-    },
-    computed: {
-      update() {
-        return
-      }
     }
   }
 </script>

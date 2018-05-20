@@ -30,6 +30,7 @@
 <script>
 import Notebooks from '@/apis/notebooks'
 import Notes from '@/apis/notes'
+// import Bus from '@/helpers/bus'
 
 export default {
   created() {
@@ -41,6 +42,8 @@ export default {
       return Notes.getNotes({ notebookId: this.curBook.id })
     }).then(res => {
       this.notes = res.data
+      this.$emit('updata-notes', this.notes)
+      // Bus.$emit('updata-notes', this.notes)
     })
   },
   data() {
@@ -57,11 +60,15 @@ export default {
         }
         Notes.getNotes({ notebookId }).then(res => {
           this.notes = res.data
+          this.$emit('updata-notes', this.notes)
         })
         this.curBook = this.notebooks.find(notebook => notebook.id ==notebookId)
       },
       addNote() {
-
+        Notes.addNote({ notebookId: this.curBook.id }).then(res => {
+          console.log(res)
+          this.notes.unshift(res.data)
+        })
       }
     }
 };
