@@ -19,6 +19,7 @@ export default {
         // 添加距离笔记本创建时间提示
         res.data.forEach(notebook => {
           notebook.clearlyCreatedAt = clearlyDate(notebook.createdAt)
+          notebook.clearlyUpdatedAt = clearlyDate(notebook.updatedAt)
         })
         resolve(res)
       }).catch(err => {
@@ -27,7 +28,15 @@ export default {
     })
   },
   addNotebook({ title = '' } = { title: '' }) {
-    return request(URL.ADD, 'POST', {title})
+    return new Promise((resolve, reject) => {
+      request(URL.ADD, 'POST', {title}).then(res => {
+        res.data.clearlyCreatedAt  = clearlyDate(res.data.createdAt)
+        res.data.clearlyUpdatedAt  = clearlyDate(res.data.updatedAt)
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   },
   updateNotebook(notebookId, { title = '' } = { title: '' }) {
     return request(URL.UPDATE.replace(':notebookId', notebookId), 'PATCH', {title})
