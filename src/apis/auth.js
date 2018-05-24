@@ -19,6 +19,5 @@ export default {
   },
   getInfo() {
     return request(URL.GET_INFO)
-  },
-
+  }
 }

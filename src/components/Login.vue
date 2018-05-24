@@ -10,7 +10,7 @@
             <div v-show="isShowRegister" class="register">
               <input type="text" v-model="register.username" placeholder="请输入用户名">
               <input type="password" v-model="register.password" placeholder="请输入密码">
-              <input type="password" v-model="register.confirmPassword" placeholder="请确认密码">
+              <input type="password" v-model="register.confirmPassword" @keyup.enter="onRegister" placeholder="请确认密码">
               <p v-bind:class="{error: register.isError}"> {{register.notice}}</p>
               <div class="button" @click="onRegister">创建账号</div>
             </div>
@@ -19,7 +19,7 @@
             <transition name="slide">
             <div v-show="isShowLogin" class="login">
               <input type="text" v-model="login.username" placeholder="请输入用户名">
-              <input type="password" v-model="login.password" placeholder="请输入密码">
+              <input type="password" v-model="login.password" @keyup.enter="onLogin" placeholder="请输入密码">
               <p v-bind:class="{error: login.isError}"> {{login.notice}}</p>
               <div class="button" @click="onLogin">登录</div>
             </div>
@@ -33,15 +33,11 @@
 
 <script>
 import Auth from '@/apis/auth'
-import Bus from '@/helpers/bus'
+import { mapGetters, mapActions } from 'vuex'
 
-// request('/auth/login', 'POST', {username: 'hunger', password: '123456'})
-// .then(data => {
-//   console.log(data)
-// })
-Auth.getInfo().then(data => {
-        console.log(`data:${data}`)
-      })
+// Auth.getInfo().then(data => {
+//         console.log(`data:${data}`)
+//       })
 export default {
   data() {
     return {
@@ -63,6 +59,11 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      loginUser: 'login',
+      registerUser: 'register',
+      checkLogin: 'checkLogin'
+    }),
     showRegister() {
       this.isShowRegister = true
       this.isShowLogin = false
@@ -83,17 +84,14 @@ export default {
         return
       }
 
-      Auth.login({
+      this.loginUser({
         username: this.login.username,
         password: this.login.password
-      }).then(data => {
-        console.log(data)
+      }).then(() => {
         this.login.isError = false
         this.login.notice = ''
-        Bus.$emit('userInfo', {username: this.login.username})
         this.$router.push({path: '/notebooks'})
-      }).catch(data => {
-        console.log(this.login.isError)
+      }).catch(() => {
         this.login.isError = true
         this.login.notice = data.msg
       })
@@ -120,17 +118,15 @@ export default {
         return
       }
 
-      Auth.register({
+      this.registerUser({
         username: this.register.username,
         password: this.register.password
-      }).then(data => {
-        console.log(data)
+      }).then(() => {
         this.register.isError = false
         this.register.notice = ''
-        Bus.$emit('userInfo', {username: this.register.username})
         this.$router.push({path: '/notebooks'})
         console.log('jump')
-      }).catch(data => {
+      }).catch(() => {
         this.register.isError = true
         this.register.notice = data.msg
       })

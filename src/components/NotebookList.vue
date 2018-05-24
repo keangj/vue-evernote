@@ -35,22 +35,31 @@ import { mapActions, mapGetters} from 'vuex'
       return {}
     },
     created() {
-      Auth.getInfo().then(data => {
-        if (!data.isLogin) {
-          this.$router.push({ path: '/login' })
-        } else {
-          this.$store.dispatch('getNotebooks')
-          // Notebooks.getNotebooks().then(res => {
-          //   this.notebooks = res.data
-          // })
-        }
+      this.checkLogin({ path: '/login' }).then(() => {
+        this.$store.dispatch('getNotebooks')
       })
+      // Auth.getInfo().then(data => {
+      //   if (!data.isLogin) {
+      //     this.$router.push({ path: '/login' })
+      //   } else {
+      //     this.$store.dispatch('getNotebooks')
+      //     // Notebooks.getNotebooks().then(res => {
+      //     //   this.notebooks = res.data
+      //     // })
+      //   }
+      // })
     },
     computed: {
       ...mapGetters(['notebooks'])
     },
     methods: {
-      ...mapActions(['getNotebooks','addNotebook','updateNotebook','deleteNotebook']),
+      ...mapActions([
+        'getNotebooks',
+        'addNotebook',
+        'updateNotebook',
+        'deleteNotebook',
+        'checkLogin'
+      ]),
       onCreate() {
         this.$prompt('请输入笔记本标题', '提示', {
           confirmButtonText: '确定',
