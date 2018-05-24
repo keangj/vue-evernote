@@ -34,10 +34,8 @@ export default {
   addNote({ notebookId }, { title = '', content = '' } = { title : '', content : '' }) {
     return new Promise((resolve, reject) => {
       request(URL.ADD.replace(':notebookId', notebookId), 'POST', {title}).then(res => {
-        console.log(res)
         res.data.clearlyCreatedAt = clearlyDate(res.data.createdAt)
         res.data.clearlyUpdatedAt = clearlyDate(res.data.updatedAt)
-        console.log(res.data)
         resolve(res)
       }).catch(err => {
         reject(err)

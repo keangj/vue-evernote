@@ -28,8 +28,6 @@
 </template>
 
 <script>
-import Notebooks from '@/apis/notebooks'
-import Notes from '@/apis/notes'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
@@ -40,17 +38,6 @@ export default {
     }).then(() => {
       this.setCurNoteId({ curNoteId: this.$route.query.noteId })
     })
-
-    // Notebooks.getNotebooks().then(res => {
-    //   this.notebooks = res.data
-    //   this.curBook = this.notebooks.find(notebook => {
-    //     return notebook.id == this.$route.query.notebookId
-    //   }) || this.notebooks[0] || {}
-    //   return Notes.getNotes({ notebookId: this.curBook.id })
-    // }).then(res => {
-    //   this.notes = res.data
-    //   this.$emit('updata-notes', this.notes)
-    // })
   },
   data() {
       return {}
@@ -80,19 +67,10 @@ export default {
       this.setCurBookId({ curBookId: notebookId })
       this.getNotes({ notebookId })
       this.setCurNoteId({ curNoteId: this.$route.query.noteId })
-      // Notes.getNotes({ notebookId }).then(res => {
-      //   this.notes = res.data
-      //   this.$emit('updata-notes', this.notes)
-      // })
-      // this.curBook = this.notebooks.find(notebook => notebook.id ==notebookId)
     },
 
     onAddNote() {
       this.addNote({notebookId: this.curBook.id})
-
-      // Notes.addNote({ notebookId: this.curBook.id }).then(res => {
-      //   this.notes.unshift(res.data)
-      // })
     }
   }
 };

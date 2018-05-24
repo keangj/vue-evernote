@@ -32,12 +32,8 @@
 </template>
 
 <script>
-import Auth from '@/apis/auth'
 import { mapGetters, mapActions } from 'vuex'
 
-// Auth.getInfo().then(data => {
-//         console.log(`data:${data}`)
-//       })
 export default {
   data() {
     return {
@@ -125,7 +121,6 @@ export default {
         this.register.isError = false
         this.register.notice = ''
         this.$router.push({path: '/notebooks'})
-        console.log('jump')
       }).catch(() => {
         this.register.isError = true
         this.register.notice = data.msg

@@ -50,7 +50,7 @@ const actions = {
   updateNote({ commit }, { noteId, title, content }) {
     return Notes.updateNote({ noteId }, { title, content }).then(res => {
       commit("updateNote", { noteId, title, content })
-      Message.success(res.msg);
+      // Message.success(res.msg);
     })
   },
   deleteNote({ commit }, { noteId }) {

@@ -24,8 +24,6 @@
 </template>
 
 <script>
-import Auth from '@/apis/auth'
-import Notebooks from '@/apis/notebooks'
 import { clearlyDate } from '@/helpers/util'
 import { mapActions, mapGetters} from 'vuex'
 
@@ -38,16 +36,6 @@ import { mapActions, mapGetters} from 'vuex'
       this.checkLogin({ path: '/login' }).then(() => {
         this.$store.dispatch('getNotebooks')
       })
-      // Auth.getInfo().then(data => {
-      //   if (!data.isLogin) {
-      //     this.$router.push({ path: '/login' })
-      //   } else {
-      //     this.$store.dispatch('getNotebooks')
-      //     // Notebooks.getNotebooks().then(res => {
-      //     //   this.notebooks = res.data
-      //     // })
-      //   }
-      // })
     },
     computed: {
       ...mapGetters(['notebooks'])
@@ -68,16 +56,7 @@ import { mapActions, mapGetters} from 'vuex'
           inputErrorMessage: '标题不能为空，且不超过30个字符'
         }).then(({ value }) => {
           this.addNotebook({ title: value })
-          // return Notebooks.addNotebook({title: value})
         })
-        // .then(res => {
-        //   res.data.clearlyCreatedAt = clearlyDate(res.data.createdAt)
-        //   this.notebooks.unshift(res.data)
-        //   this.$message({
-        //     type: 'success',
-        //     message: res.msg
-        //   });
-        // });
       },
       onEdit(item) {
         let title = ''
@@ -89,16 +68,7 @@ import { mapActions, mapGetters} from 'vuex'
           inputErrorMessage: '标题不能为空，且不超过30个字符'
         }).then(({ value }) => {
           this.updateNotebook({ notebookId: item.id,title: value })
-          // title = value
-          // return Notebooks.updateNotebook(item.id, {title: value})
         })
-        // .then(res => {
-        //   item.title = title
-        //   this.$message({
-        //     type: 'success',
-        //     message: res.msg
-        //   });
-        // });
       },
       onDelete(item) {
         this.$confirm('此操作将永久删除该笔记本, 是否继续?', '提示', {
@@ -107,15 +77,7 @@ import { mapActions, mapGetters} from 'vuex'
           type: 'warning'
         }).then(() => {
           this.deleteNotebook({ notebookId: item.id })
-          // return Notebooks.deleteNotebook(item.id)
         })
-        // .then(res => {
-        //   this.notebooks.splice(this.notebooks.indexOf(item),1)
-        //   this.$message({
-        //     type: 'success',
-        //     message: res.msg
-        //   });
-        // });
       }
     }
   }
