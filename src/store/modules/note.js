@@ -55,6 +55,7 @@ const actions = {
   },
   deleteNote({ commit }, { noteId }) {
     return Notes.deleteNote({ noteId }).then(res => {
+      commit('addTrashNote', { note: state.notes.filter(note => note.id == noteId)[0] })
       commit("deleteNote", { noteId });
       Message.success(res.msg);
     });

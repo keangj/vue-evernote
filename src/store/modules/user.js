@@ -27,7 +27,8 @@ const actions = {
       commit('setUser', { user: res.data})
     })
   },
-  checkLogin({ commit }, payload) {
+  checkLogin({ commit, state }, payload) {
+    if (state.user !== null) return Promise.resolve()
     return Auth.getInfo().then(res => {
       if (!res.isLogin) {
         router.push(payload)

@@ -47,7 +47,9 @@ export default {
   },
 
   created() {
-    this.checkLogin({ path: '/login' })
+    this.checkLogin({ path: '/login' }).then(() => {
+      this.getTrashNotes()
+    })
   },
   computed: {
     ...mapGetters([
@@ -65,7 +67,8 @@ export default {
     ...mapActions([
       'updateNote',
       'deleteNote',
-      'checkLogin'
+      'checkLogin',
+      'getTrashNotes'
     ]),
 
     onDeleteNote() {

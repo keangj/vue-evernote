@@ -1,0 +1,87 @@
+#trash {
+  .trash-sidebar{
+  width: 290px;
+  position: relative;
+  border-right: 1px solid #ccc;
+  background-color: #eee;
+  .note-title {
+    text-align: center;
+    height: 45px;
+    line-height: 45px;
+    color: #333;
+    font-size: 18px;
+    font-weight: 400;
+    background-color: #f7f7f7;
+  }
+  .menu {
+    display: flex;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    font-size: 12px;
+    span {
+      flex: 1;
+      padding: 2px 10px;
+      border-left: 1px solid #ccc;
+    }
+  }
+  .notes {
+    height: ~"calc(100% - 70px)";
+    overflow:auto;
+    .note {
+      display: flex;
+      padding: 2px 3px;
+    }
+    span {
+      flex: 1;
+      padding: 2px 10px;
+      font-size: 12px;
+    }
+    li {
+      a {
+        border: 2px solid transparent;
+      }
+      .router-link-exact-active {
+        border: 2px solid #81c0f3;
+      }
+    }
+  }
+  }
+
+  .trash-detail {
+    flex: 1;
+    .note-bar {
+      padding: 6px 20px;
+      border-bottom: 1px solid #eee;
+      span {
+        margin-right: 5px;
+        font-size: 12px;
+        color: #9c9c9c;
+      }
+      .btn {
+        float: right;
+        color: #666;
+      }
+    }
+    .note-title {
+      color: #000;
+      span {
+        display: inline-block;
+        width: 100%;
+        padding: 10px 20px;
+        border: none;
+        font-size: 18px;
+        font-weight: 400;
+        color: #000;
+      }
+    }
+    .editor {
+      height: ~"calc(100% - 75px)";
+      .markdown-body {
+        padding: 20px;
+        height: 100%;
+      }
+    }
+  }
+}
+
+
