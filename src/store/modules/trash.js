@@ -19,7 +19,7 @@ const getters = {
 }
 
 const mutations = {
-  setCurTrashNoteId(state, payload) {
+  setCurTrashNoteId(state, payload = {}) {
     state.curTrashNoteId = payload.curTrashNoteId
   },
   setTrashNotes(state, payload) {

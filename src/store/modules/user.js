@@ -36,6 +36,16 @@ const actions = {
         commit('setUser', { user: res.data })
       }
     })
+  },
+  logout({ commit }, payload = { path: '/login' }) {
+    Auth.logout().then(res => {
+      commit('setUser', { user: null })
+      commit('setNotes', { notes: null })
+      commit('setNotebooks', { notebooks: null })
+      commit('setCurNoteId', { curNoteId: null })
+      commit('setCurBookId', { curBookId: null })
+    })
+    router.push(payload)
   }
 }
 

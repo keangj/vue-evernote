@@ -54,7 +54,8 @@ export default {
   computed: {
     ...mapGetters([
       'notes',
-      'curNote'
+      'curNote',
+      'curBook'
     ]),
     previewContent() {
       if (this.curNote.content) {
@@ -73,7 +74,14 @@ export default {
 
     onDeleteNote() {
       this.deleteNote({ noteId: this.curNote.id }).then(() => {
-        this.$router.replace({ path: '/note' })
+        this.setCurNoteId()
+        this.$router.replace({
+          path: '/note',
+          query: {
+            noteId: this.curNote.id,
+            notebookId: this.curBook.id
+          }
+        })
       })
     },
     onUpdataNote: _.debounce(function() {

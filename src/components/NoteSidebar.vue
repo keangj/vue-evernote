@@ -1,7 +1,8 @@
 <template>
   <div id="note-sidebar">
     <div class="wrap">
-    <el-dropdown class="note-title" @command="handleCommand">
+    <span v-show="!isShow" class="note-title">无笔记本</span>
+    <el-dropdown v-show="isShow" class="note-title" @command="handleCommand">
       <span class="el-dropdown-link">
         {{curBook.title}}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
@@ -11,7 +12,7 @@
       </el-dropdown-menu>
     </el-dropdown>
     </div>
-    <span class="btn add-note" @click="onAddNote">添加笔记</span>
+    <span class="btn add-note" v-show="isShow" @click="onAddNote">添加笔记</span>
     <div class="menu">
       <span>更新时间</span>
       <span>标题</span>
@@ -34,13 +35,26 @@ export default {
   created() {
     this.getNotebooks().then(() => {
       this.setCurBookId({ curBookId: this.$route.query.notebookId })
-      return this.getNotes({ notebookId: this.curBook.id })
+      if (this.curBook.id) {
+        return this.getNotes({ notebookId: this.curBook.id })
+      } else {
+        this.isShow = false
+      }
     }).then(() => {
       this.setCurNoteId({ curNoteId: this.$route.query.noteId })
+      this.$router.replace({
+        path: '/note',
+        query: {
+          noteId: this.curNote.id,
+          notebookId: this.curBook.id
+        }
+      })
     })
   },
   data() {
-      return {}
+      return {
+        isShow: true
+      }
   },
   computed: {
     ...mapGetters([
@@ -65,8 +79,16 @@ export default {
         return this.$router.push({ path: '/trash'})
       }
       this.setCurBookId({ curBookId: notebookId })
-      this.getNotes({ notebookId })
-      this.setCurNoteId({ curNoteId: this.$route.query.noteId })
+      this.getNotes({ notebookId }).then(() => {
+      this.setCurNoteId()
+      this.$router.replace({
+        path: '/note',
+        query: {
+          noteId: this.curNote.id,
+          notebookId: this.curBook.id
+        }
+      })
+    })
     },
 
     onAddNote() {

@@ -19,7 +19,6 @@ export default function request(url, type = 'GET', data = {}) {
       config.params = data
     } else {
       config.data = data
-      console.log(data)
     }
     axios(config).then(res => {
       if (res.status === 200) {
@@ -29,11 +28,9 @@ export default function request(url, type = 'GET', data = {}) {
           type: 'error',
           message: res.data.msg
         });
-        console.error(res.data)
         reject(res.data)
       }
     }).catch(err => {
-      console.log(err)
       Message({
         type: 'error',
         message: 'error'

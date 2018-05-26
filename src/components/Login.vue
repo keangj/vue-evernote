@@ -37,8 +37,8 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      isShowRegister: true,
-      isShowLogin: false,
+      isShowRegister: false,
+      isShowLogin: true,
       register: {
         username: '',
         password: '',

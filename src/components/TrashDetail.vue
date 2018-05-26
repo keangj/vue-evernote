@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import Trash from '@/apis/trash'
 import MarkdownIt from 'markdown-it'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 
@@ -68,11 +67,32 @@ export default {
       'getNotebooks'
     ]),
     onDelete() {
-      this.deleteTrashNote({ noteId: this.curTrashNote.id })
+      this.$confirm('此操作将永久删除该笔记, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return this.deleteTrashNote({ noteId: this.curTrashNote.id })
+      }).then(() => {
+        this.setCurTrashNoteId()
+        this.$router.replace({
+          path: '/trash',
+          query: {
+            noteId: this.curTrashNote.id
+          }
+        })
+      })
     },
     onRevert() {
-      console.log(this.curTrashNote)
-      this.revertTrashNote({ note: this.curTrashNote })
+      this.revertTrashNote({ note: this.curTrashNote }).then(() => {
+        this.setCurTrashNoteId()
+        this.$router.replace({
+          path: '/trash',
+          query: {
+            noteId: this.curTrashNote.id
+          }
+        })
+      })
     }
   },
 
@@ -89,6 +109,12 @@ export default {
     }).then(() => {
       this.getNotebooks()
       this.setCurTrashNoteId({ curTrashNoteId: this.$route.query.noteId })
+      this.$router.replace({
+        path: '/trash',
+        query: {
+          noteId: this.curTrashNote.id
+        }
+      })
     })
   }
 }

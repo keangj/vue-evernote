@@ -30,13 +30,14 @@ const mutations = {
   deleteNote(state, payload) {
     state.notes = state.notes.filter(note => note.id != payload.noteId);
   },
-  setCurNoteId(state, payload) {
+  setCurNoteId(state, payload = {}) {
     state.curNoteId = payload.curNoteId;
   }
 };
 
 const actions = {
   getNotes({ commit }, { notebookId }) {
+    if (!notebookId) return Promise.resolve()
     return Notes.getNotes({ notebookId }).then(res => {
       commit("setNotes", { notes: res.data });
     });

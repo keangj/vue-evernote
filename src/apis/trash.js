@@ -9,11 +9,9 @@ const URL = {
 
 export default {
   confirm({ noteId }) {
-    console.log(noteId)
     return request(URL.CONFIRM.replace(':noteId', noteId), 'DELETE')
   },
   revert({ noteId }) {
-    console.log(noteId)
     return request(URL.REVERT.replace(':noteId', noteId), 'PATCH')
   },
   getTrash() {
